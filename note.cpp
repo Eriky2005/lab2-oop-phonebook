@@ -13,8 +13,12 @@ bool NOTE::isValidDate(int day, int month, int year) const
 		return false;
 
 	// Простая проверка дней в месяце
-	if (month == 2 && day > 29)
-		return false;
+	if (month == 2)
+	{
+		bool isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+		if (day > (isLeap ? 29 : 28))
+			return false;
+	}
 	if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
 		return false;
 
@@ -145,7 +149,7 @@ const int *NOTE::getBirthday() const { return birthday; }
 
 bool NOTE::operator<(const NOTE &other) const
 {
-	// Сравнение по году, месяцу, дню
+	// Сравнение по дате рождения (год, месяц, день)
 	if (birthday[2] != other.birthday[2])
 		return birthday[2] < other.birthday[2];
 	if (birthday[1] != other.birthday[1])
@@ -161,7 +165,7 @@ bool NOTE::operator==(const NOTE &other) const
 void NOTE::printInfo() const
 {
 	std::cout << "Тип: " << getType() << std::endl;
-	std::cout << "Имя: " << (name ? name : "не указано") << std::endl;
+	std::cout << "ФИО: " << (name ? name : "не указано") << std::endl;
 	std::cout << "Телефон: " << (phone ? phone : "не указан") << std::endl;
 	std::cout << "Дата рождения: " << birthday[0] << "." << birthday[1] << "." << birthday[2] << std::endl;
 }
@@ -169,7 +173,7 @@ void NOTE::printInfo() const
 std::ostream &operator<<(std::ostream &os, const NOTE &note)
 {
 	os << "Тип: " << note.getType() << "\n";
-	os << "Имя: " << (note.name ? note.name : "не указано") << "\n";
+	os << "ФИО: " << (note.name ? note.name : "не указано") << "\n";
 	os << "Телефон: " << (note.phone ? note.phone : "не указан") << "\n";
 	os << "Дата рождения: " << note.birthday[0] << "." << note.birthday[1] << "." << note.birthday[2];
 	return os;
@@ -179,7 +183,7 @@ std::istream &operator>>(std::istream &is, NOTE &note)
 {
 	char buffer[100];
 
-	std::cout << "Введите имя: ";
+	std::cout << "Введите ФИО: ";
 	is.ignore();
 	is.getline(buffer, 100);
 	note.setName(buffer);

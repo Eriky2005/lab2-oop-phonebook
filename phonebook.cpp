@@ -83,7 +83,7 @@ void PhoneBook::addContact(NOTE *contact, int position)
 	}
 	size++;
 
-	// Автоматическая сортировка после добавления
+	// Автоматическая сортировка по дате рождения после добавления
 	sortContactsByBirthday();
 	std::cout << "Контакт добавлен. Всего контактов: " << size << std::endl;
 }
@@ -125,6 +125,10 @@ void PhoneBook::editContact(int index)
 	}
 
 	std::cout << "Редактирование контакта: " << contacts[index]->getName() << std::endl;
+	std::cout << "Текущие данные:" << std::endl;
+	contacts[index]->printInfo();
+
+	std::cout << "\nВведите новые данные:" << std::endl;
 	std::cin >> *contacts[index];
 
 	// Пересортировка после редактирования
@@ -151,6 +155,7 @@ void PhoneBook::displayAllContacts() const
 	}
 
 	std::cout << "\n=== ВСЕ КОНТАКТЫ (" << size << ") ===" << std::endl;
+	std::cout << "(отсортированы по дате рождения)" << std::endl;
 	for (int i = 0; i < size; i++)
 	{
 		std::cout << "\n--- Контакт #" << (i + 1) << " ---" << std::endl;

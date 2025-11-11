@@ -63,12 +63,15 @@ public:
 	const char *getName() const;
 	const char *getPhone() const;
 	const int *getBirthday() const;
+	int getBirthYear() const { return birthday[2]; }
+	int getBirthMonth() const { return birthday[1]; }
+	int getBirthDay() const { return birthday[0]; }
 
 	// Виртуальные методы для наследования
 	virtual void printInfo() const;
 	virtual const char *getType() const { return "Базовый контакт"; }
 
-	// Методы для сравнения (для сортировки)
+	// Методы для сравнения (для сортировки по дате рождения)
 	bool operator<(const NOTE &other) const;
 	bool operator==(const NOTE &other) const;
 
